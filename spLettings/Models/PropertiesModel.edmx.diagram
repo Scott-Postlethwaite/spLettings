@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8d4b0cafee9a4a7c93067098d427240f" Name="Diagram1">
+        <EntityTypeShape EntityType="PropertiesDBModel.Image" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PropertiesDBModel.Interest" Width="1.5" PointX="3" PointY="4.75" />
+        <EntityTypeShape EntityType="PropertiesDBModel.Property" Width="1.5" PointX="0.75" PointY="2.375" />
+        <AssociationConnector Association="PropertiesDBModel.FK_Images_ToTable" />
+        <AssociationConnector Association="PropertiesDBModel.FK_Table_ToTable" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

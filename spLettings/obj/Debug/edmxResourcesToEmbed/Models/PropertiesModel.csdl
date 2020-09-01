@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PropertiesDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Image">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="Image1" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Property" Relationship="PropertiesDBModel.FK_Images_ToTable" FromRole="Image" ToRole="Property" />
+  </EntityType>
+  <EntityContainer Name="PropertiesDBEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Images" EntityType="Self.Image" />
+    <EntitySet Name="Interests" EntityType="PropertiesDBModel.Interest" />
+    <EntitySet Name="Properties" EntityType="PropertiesDBModel.Property" />
+    <AssociationSet Name="FK_Images_ToTable" Association="PropertiesDBModel.FK_Images_ToTable">
+      <End Role="Property" EntitySet="Properties" />
+      <End Role="Image" EntitySet="Images" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Table_ToTable" Association="PropertiesDBModel.FK_Table_ToTable">
+      <End Role="Property" EntitySet="Properties" />
+      <End Role="Interest" EntitySet="Interests" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Interest">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="User" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Property" Relationship="PropertiesDBModel.FK_Table_ToTable" FromRole="Interest" ToRole="Property" />
+  </EntityType>
+  <EntityType Name="Property">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="Bedrooms" Type="Int32" />
+    <Property Name="Lat" Type="Decimal" Precision="18" Scale="6" />
+    <Property Name="Long" Type="Decimal" Precision="18" Scale="6" />
+    <Property Name="Manager" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Price" Type="Int32" />
+    <Property Name="Availible" Type="DateTime" Precision="7" />
+    <Property Name="Description" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Images" Relationship="PropertiesDBModel.FK_Images_ToTable" FromRole="Property" ToRole="Image" />
+    <NavigationProperty Name="Interests" Relationship="PropertiesDBModel.FK_Table_ToTable" FromRole="Property" ToRole="Interest" />
+  </EntityType>
+  <Association Name="FK_Images_ToTable">
+    <End Type="PropertiesDBModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="PropertiesDBModel.Image" Role="Image" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Image">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Table_ToTable">
+    <End Type="PropertiesDBModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="PropertiesDBModel.Interest" Role="Interest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Interest">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

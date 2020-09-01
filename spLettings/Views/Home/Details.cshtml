@@ -1,0 +1,117 @@
+﻿@model spLettings.Models.Property
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@Html.DisplayFor(model => model.Address)</h2>
+
+<div>
+    <h4>   </h4>
+    <hr />
+    <div style="float:left">
+        <img src="@Url.Content(Model.Images.First().Image1)" />
+        <h4></h4>
+
+
+        @using (Html.BeginForm("Inquire", "Home", new { id = Model.Id }, FormMethod.Get))
+        {
+            @Html.AntiForgeryToken()
+            <input type="submit" value="Register Interest" class="btn btn-primary" />
+            <script type="text/javascript">
+                alert("Your interest has been registered. The property manager will contact you shortly to discuss the next steps.");
+                                                                                        }
+            </script>
+
+        }
+ <hr/>
+       
+    </div>
+
+    <div style="float:left">
+        <div style=" padding: 150px 0px">
+            <dl class="dl-horizontal">
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Bedrooms)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Bedrooms)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Manager)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Manager)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.City)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.City)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Availible)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Availible)
+                </dd>
+
+
+            </dl>
+
+        </div>
+    </div>
+
+
+    <p style="width:50%">
+
+        @Html.DisplayFor(model => model.Description)
+    </p>
+    <hr/>
+
+
+    <div id="MapDiv" style="width: 1000px; height: 500px; padding-top:200px;">
+    </div>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxGJf6AlxRoW8mIzaqTPFczEHuc39_w14"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        var markers = @Html.Raw(ViewBag.Markers);
+        window.onload = function () {
+            var mapOptions = {
+                center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+                zoom: 18,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var infoWindow = new google.maps.InfoWindow();
+            var map = new google.maps.Map(document.getElementById("MapDiv"), mapOptions);
+            for (i = 0; i < markers.length; i++) {
+                var data = markers[i]
+                var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+                var marker = new google.maps.Marker({
+                    id: data.id,
+                    position: myLatlng,
+                    map: map,
+                    title: data.title
+                });
+
+            }
+        }
+    </script>
+
